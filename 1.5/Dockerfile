@@ -24,6 +24,10 @@ RUN set -x \
 	&& apt-get install -y --no-install-recommends logstash=$LOGSTASH_VERSION \
 	&& rm -rf /var/lib/apt/lists/*
 
+RUN /opt/logstash/bin/plugin install logstash-filter-alter \
+        && /opt/logstash/bin/plugin install logstash-output-hipchat \
+        && /opt/logstash/bin/plugin install logstash-filter-cidr
+
 ENV PATH /opt/logstash/bin:$PATH
 
 COPY docker-entrypoint.sh /
